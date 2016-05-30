@@ -34,10 +34,12 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected int year;
     protected Context context;
     protected ArrayList<DateTime> disableDates;
+    protected ArrayList<DateTime> enablesDates;
     protected ArrayList<DateTime> selectedDates;
 
     // Use internally, to make the search for date faster instead of using
     // indexOf methods on ArrayList
+    protected Map<DateTime, Integer> enablesDatesMap = new HashMap<>();
     protected Map<DateTime, Integer> disableDatesMap = new HashMap<>();
     protected Map<DateTime, Integer> selectedDatesMap = new HashMap<>();
 
@@ -98,6 +100,14 @@ public class CaldroidGridAdapter extends BaseAdapter {
 
     public void setDisableDates(ArrayList<DateTime> disableDates) {
         this.disableDates = disableDates;
+    }
+
+    public void setEnablesDates(ArrayList<DateTime> enablesDates) {
+        this.enablesDates = enablesDates;
+    }
+
+    public ArrayList<DateTime> getEnablesDates() {
+        return enablesDates;
     }
 
     public ArrayList<DateTime> getSelectedDates() {
@@ -170,6 +180,15 @@ public class CaldroidGridAdapter extends BaseAdapter {
             disableDatesMap.clear();
             for (DateTime dateTime : disableDates) {
                 disableDatesMap.put(dateTime, 1);
+            }
+        }
+
+        enablesDates = (ArrayList<DateTime>) caldroidData
+                .get(CaldroidFragment.ENABELD_DATES);
+        if (enablesDates != null) {
+            enablesDatesMap.clear();
+            for (DateTime dateTime : enablesDates) {
+                enablesDatesMap.put(dateTime, 1);
             }
         }
 
@@ -309,6 +328,14 @@ public class CaldroidGridAdapter extends BaseAdapter {
         if ((minDateTime != null && dateTime.lt(minDateTime))
                 || (maxDateTime != null && dateTime.gt(maxDateTime))
                 || (disableDates != null && disableDatesMap
+                .containsKey(dateTime))) {
+
+            cellView.addCustomState(CellView.STATE_DISABLED);
+        }
+        // Customize for disabled dates and date outside min/max dates
+        if ((minDateTime != null && dateTime.lt(minDateTime))
+                || (maxDateTime != null && dateTime.gt(maxDateTime))
+                || (enablesDates != null && !enablesDatesMap
                 .containsKey(dateTime))) {
 
             cellView.addCustomState(CellView.STATE_DISABLED);

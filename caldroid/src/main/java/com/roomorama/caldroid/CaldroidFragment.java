@@ -139,6 +139,7 @@ public class CaldroidFragment extends DialogFragment {
             YEAR = "year",
             SHOW_NAVIGATION_ARROWS = "showNavigationArrows",
             DISABLE_DATES = "disableDates",
+            ENABELD_DATES = "enabledDates",
             SELECTED_DATES = "selectedDates",
             MIN_DATE = "minDate",
             MAX_DATE = "maxDate",
@@ -164,6 +165,7 @@ public class CaldroidFragment extends DialogFragment {
     protected String dialogTitle;
     protected int month = -1;
     protected int year = -1;
+    protected ArrayList<DateTime> enabledDates = new ArrayList<DateTime>();
     protected ArrayList<DateTime> disableDates = new ArrayList<DateTime>();
     protected ArrayList<DateTime> selectedDates = new ArrayList<DateTime>();
     protected DateTime minDateTime;
@@ -353,6 +355,7 @@ public class CaldroidFragment extends DialogFragment {
     public Map<String, Object> getCaldroidData() {
         caldroidData.clear();
         caldroidData.put(DISABLE_DATES, disableDates);
+        caldroidData.put(ENABELD_DATES, enabledDates);
         caldroidData.put(SELECTED_DATES, selectedDates);
         caldroidData.put(_MIN_DATE_TIME, minDateTime);
         caldroidData.put(_MAX_DATE_TIME, maxDateTime);
@@ -516,6 +519,11 @@ public class CaldroidFragment extends DialogFragment {
         if (disableDates != null && disableDates.size() > 0) {
             bundle.putStringArrayList(DISABLE_DATES,
                     CalendarHelper.convertToStringList(disableDates));
+        }
+
+        if (enabledDates != null && enabledDates.size() > 0) {
+            bundle.putStringArrayList(ENABELD_DATES,
+                    CalendarHelper.convertToStringList(enabledDates));
         }
 
         if (minDateTime != null) {
@@ -689,6 +697,62 @@ public class CaldroidFragment extends DialogFragment {
      */
     public void clearDisableDates() {
         disableDates.clear();
+    }
+
+    public void clearEnabledDates() {
+        enabledDates.clear();
+    }
+
+    /**
+     * Set enabledDates from ArrayList of Date
+     *
+     * @param enabledDateList
+     */
+    public void setEnabledDates(ArrayList<Date> enabledDateList) {
+        if (enabledDateList == null || enabledDateList.size() == 0) {
+            return;
+        }
+
+        enabledDates.clear();
+
+        for (Date date : enabledDateList) {
+            DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
+            disableDates.add(dateTime);
+        }
+
+    }
+
+    /**
+     * Set disableDates from ArrayList of String. By default, the date formatter
+     * is yyyy-MM-dd. For e.g 2013-12-24
+     *
+     * @param enabledDateStrings
+     */
+    public void setEnabledDatesFromString(ArrayList<String> enabledDateStrings) {
+        setEnabledDatesFromString(enabledDateStrings, null);
+    }
+
+    /**
+     * Set disableDates from ArrayList of String with custom date format. For
+     * example, if the date string is 06-Jan-2013, use date format dd-MMM-yyyy.
+     * This method will refresh the calendar, it's not necessary to call
+     * refreshView()
+     *
+     * @param enabledDateStrings
+     * @param dateFormat
+     */
+    public void setEnabledDatesFromString(ArrayList<String> enabledDateStrings, String dateFormat) {
+        if (enabledDateStrings == null) {
+            return;
+        }
+
+        enabledDates.clear();
+
+        for (String dateString : enabledDateStrings) {
+            DateTime dateTime = CalendarHelper.getDateTimeFromString(
+                    dateString, dateFormat);
+            disableDates.add(dateTime);
+        }
     }
 
     /**
@@ -1140,6 +1204,18 @@ public class CaldroidFragment extends DialogFragment {
                     DateTime dt = CalendarHelper.getDateTimeFromString(
                             dateString, null);
                     disableDates.add(dt);
+                }
+            }
+
+            // Get disable dates
+            ArrayList<String> enabledDateStrings = args
+                    .getStringArrayList(ENABELD_DATES);
+            if (enabledDateStrings != null && enabledDateStrings.size() > 0) {
+                enabledDates.clear();
+                for (String dateString : enabledDateStrings) {
+                    DateTime dt = CalendarHelper.getDateTimeFromString(
+                            dateString, null);
+                    enabledDates.add(dt);
                 }
             }
 
