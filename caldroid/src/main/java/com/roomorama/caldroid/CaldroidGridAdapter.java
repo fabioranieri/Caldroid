@@ -51,6 +51,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
     protected boolean squareTextViewCell;
     protected int themeResource;
     protected Resources resources;
+    protected boolean fillCellOnRow;
 
     protected int defaultCellBackgroundRes = -1;
     protected ColorStateList defaultTextColorRes;
@@ -70,7 +71,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         this.month = dateTime.getMonth();
         this.year = dateTime.getYear();
         this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
-                startDayOfWeek, sixWeeksInCalendar);
+                startDayOfWeek, sixWeeksInCalendar, fillCellOnRow);
     }
 
     // GETTERS AND SETTERS
@@ -184,7 +185,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         }
 
         enablesDates = (ArrayList<DateTime>) caldroidData
-                .get(CaldroidFragment.ENABELD_DATES);
+                .get(CaldroidFragment.ENABLED_DATES);
         if (enablesDates != null) {
             enablesDatesMap.clear();
             for (DateTime dateTime : enablesDates) {
@@ -212,12 +213,14 @@ public class CaldroidGridAdapter extends BaseAdapter {
         squareTextViewCell = (Boolean) caldroidData
                 .get(CaldroidFragment.SQUARE_TEXT_VIEW_CELL);
 
+        fillCellOnRow = (Boolean) caldroidData.get(CaldroidFragment.FILL_CELL_ON_ROW);
+
         // Get theme
         themeResource = (Integer) caldroidData
                 .get(CaldroidFragment.THEME_RESOURCE);
 
         this.datetimeList = CalendarHelper.getFullWeeks(this.month, this.year,
-                startDayOfWeek, sixWeeksInCalendar);
+                startDayOfWeek, sixWeeksInCalendar, fillCellOnRow);
 
         getDefaultResources();
     }

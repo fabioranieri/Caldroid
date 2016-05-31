@@ -139,7 +139,7 @@ public class CaldroidFragment extends DialogFragment {
             YEAR = "year",
             SHOW_NAVIGATION_ARROWS = "showNavigationArrows",
             DISABLE_DATES = "disableDates",
-            ENABELD_DATES = "enabledDates",
+            ENABLED_DATES = "enabledDates",
             SELECTED_DATES = "selectedDates",
             MIN_DATE = "minDate",
             MAX_DATE = "maxDate",
@@ -148,7 +148,9 @@ public class CaldroidFragment extends DialogFragment {
             SIX_WEEKS_IN_CALENDAR = "sixWeeksInCalendar",
             ENABLE_CLICK_ON_DISABLED_DATES = "enableClickOnDisabledDates",
             SQUARE_TEXT_VIEW_CELL = "squareTextViewCell",
-            THEME_RESOURCE = "themeResource";
+            THEME_RESOURCE = "themeResource",
+            FILL_CELL_ON_ROW = "fillCellOnRow"
+    ;
 
     /**
      * For internal use
@@ -208,6 +210,8 @@ public class CaldroidFragment extends DialogFragment {
      * datePagerAdapters hold 4 adapters, meant to be reused
      */
     protected ArrayList<CaldroidGridAdapter> datePagerAdapters = new ArrayList<CaldroidGridAdapter>();
+
+    private boolean fillCellOnRow = true;
 
     /**
      * To control the navigation
@@ -355,7 +359,8 @@ public class CaldroidFragment extends DialogFragment {
     public Map<String, Object> getCaldroidData() {
         caldroidData.clear();
         caldroidData.put(DISABLE_DATES, disableDates);
-        caldroidData.put(ENABELD_DATES, enabledDates);
+        caldroidData.put(ENABLED_DATES, enabledDates);
+        caldroidData.put(FILL_CELL_ON_ROW, fillCellOnRow);
         caldroidData.put(SELECTED_DATES, selectedDates);
         caldroidData.put(_MIN_DATE_TIME, minDateTime);
         caldroidData.put(_MAX_DATE_TIME, maxDateTime);
@@ -522,7 +527,7 @@ public class CaldroidFragment extends DialogFragment {
         }
 
         if (enabledDates != null && enabledDates.size() > 0) {
-            bundle.putStringArrayList(ENABELD_DATES,
+            bundle.putStringArrayList(ENABLED_DATES,
                     CalendarHelper.convertToStringList(enabledDates));
         }
 
@@ -539,6 +544,8 @@ public class CaldroidFragment extends DialogFragment {
         bundle.putInt(START_DAY_OF_WEEK, startDayOfWeek);
         bundle.putBoolean(SIX_WEEKS_IN_CALENDAR, sixWeeksInCalendar);
         bundle.putInt(THEME_RESOURCE, themeResource);
+
+        bundle.putBoolean(FILL_CELL_ON_ROW, fillCellOnRow);
 
         Bundle args = getArguments();
         if (args != null && args.containsKey(SQUARE_TEXT_VIEW_CELL)) {
@@ -701,6 +708,14 @@ public class CaldroidFragment extends DialogFragment {
 
     public void clearEnabledDates() {
         enabledDates.clear();
+    }
+
+    public boolean isFillCellOnRow() {
+        return fillCellOnRow;
+    }
+
+    public void setFillCellOnRow(boolean fillCellOnRow) {
+        this.fillCellOnRow = fillCellOnRow;
     }
 
     /**
@@ -1179,6 +1194,8 @@ public class CaldroidFragment extends DialogFragment {
             // Should enable swipe to change month
             enableSwipe = args.getBoolean(ENABLE_SWIPE, true);
 
+            fillCellOnRow = args.getBoolean(FILL_CELL_ON_ROW, true);
+
             // Get sixWeeksInCalendar
             sixWeeksInCalendar = args.getBoolean(SIX_WEEKS_IN_CALENDAR, true);
 
@@ -1209,7 +1226,7 @@ public class CaldroidFragment extends DialogFragment {
 
             // Get disable dates
             ArrayList<String> enabledDateStrings = args
-                    .getStringArrayList(ENABELD_DATES);
+                    .getStringArrayList(ENABLED_DATES);
             if (enabledDateStrings != null && enabledDateStrings.size() > 0) {
                 enabledDates.clear();
                 for (String dateString : enabledDateStrings) {
