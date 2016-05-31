@@ -732,7 +732,7 @@ public class CaldroidFragment extends DialogFragment {
 
         for (Date date : enabledDateList) {
             DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
-            disableDates.add(dateTime);
+            enabledDates.add(dateTime);
         }
 
     }
@@ -766,7 +766,7 @@ public class CaldroidFragment extends DialogFragment {
         for (String dateString : enabledDateStrings) {
             DateTime dateTime = CalendarHelper.getDateTimeFromString(
                     dateString, dateFormat);
-            disableDates.add(dateTime);
+            enabledDates.add(dateTime);
         }
     }
 
@@ -1224,7 +1224,7 @@ public class CaldroidFragment extends DialogFragment {
                 }
             }
 
-            // Get disable dates
+            // Get enabled dates
             ArrayList<String> enabledDateStrings = args
                     .getStringArrayList(ENABLED_DATES);
             if (enabledDateStrings != null && enabledDateStrings.size() > 0) {
