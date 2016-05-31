@@ -2,7 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.caldroid"
-    android:versionCode="1"
+    android:versionCode="2"
     android:versionName="1.5" >
 
     <application tools:replace="android:icon" />
