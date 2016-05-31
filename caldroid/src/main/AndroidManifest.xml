@@ -5,5 +5,7 @@
     android:versionCode="2"
     android:versionName="1.5" >
 
-    <application tools:replace="android:icon" />
+    <application
+        android:icon="@mipmap/ic_launcher"
+        />
 </manifest>
