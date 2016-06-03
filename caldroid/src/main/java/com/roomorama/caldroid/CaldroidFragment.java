@@ -123,7 +123,7 @@ public class CaldroidFragment extends DialogFragment {
     private Button leftArrowButton;
     private Button rightArrowButton;
     private TextView monthTitleTextView;
-    private GridView weekdayGridView;
+    private com.roomorama.caldroid.CaldroidGridView weekdayGridView;
     private InfiniteViewPager dateViewPager;
     private DatePageChangeListener pageChangeListener;
     private ArrayList<DateGridFragment> fragments;
@@ -287,7 +287,7 @@ public class CaldroidFragment extends DialogFragment {
      *
      * @return
      */
-    public GridView getWeekdayGridView() {
+    public com.roomorama.caldroid.CaldroidGridView getWeekdayGridView() {
         return weekdayGridView;
     }
 
@@ -1380,7 +1380,7 @@ public class CaldroidFragment extends DialogFragment {
         setShowNavigationArrows(showNavigationArrows);
 
         // For the weekday gridview ("SUN, MON, TUE, WED, THU, FRI, SAT")
-        weekdayGridView = (GridView) view.findViewById(R.id.weekday_gridview);
+        weekdayGridView = (com.roomorama.caldroid.CaldroidGridView) view.findViewById(R.id.weekday_gridview);
         WeekdayArrayAdapter weekdaysAdapter = getNewWeekdayAdapter(themeResource);
         weekdayGridView.setAdapter(weekdaysAdapter);
 
