@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -338,9 +339,9 @@ public class CaldroidGridAdapter extends BaseAdapter {
         // Customize for disabled dates and date outside min/max dates
         if ((minDateTime != null && dateTime.lt(minDateTime))
                 || (maxDateTime != null && dateTime.gt(maxDateTime))
-                || (enablesDates != null && !enablesDatesMap
+                || (enablesDates != null && enablesDatesMap
                 .containsKey(dateTime))) {
-
+        } else {
             cellView.addCustomState(CellView.STATE_DISABLED);
         }
 

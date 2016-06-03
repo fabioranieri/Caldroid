@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends AppCompatActivity {
@@ -159,6 +160,11 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                     caldroidFragment.setMaxDate(null);
                     caldroidFragment.setShowNavigationArrows(true);
                     caldroidFragment.setEnableSwipe(true);
+
+                    ArrayList<Date> enabled = new ArrayList<Date>();
+                    enabled.add(new Date());
+                    caldroidFragment.setEnabledDates(enabled);
+
                     caldroidFragment.refreshView();
                     undo = false;
                     return;
@@ -200,7 +206,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
                 // Customize
                 caldroidFragment.setMinDate(minDate);
                 caldroidFragment.setMaxDate(maxDate);
-                caldroidFragment.setDisableDates(disabledDates);
+                //caldroidFragment.setDisableDates(disabledDates);
                 caldroidFragment.setSelectedDates(fromDate, toDate);
                 caldroidFragment.setShowNavigationArrows(false);
                 caldroidFragment.setEnableSwipe(false);
