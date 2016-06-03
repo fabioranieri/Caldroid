@@ -20,11 +20,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.antonyt.infiniteviewpager.InfinitePagerAdapter;
@@ -123,7 +125,7 @@ public class CaldroidFragment extends DialogFragment {
     private Button leftArrowButton;
     private Button rightArrowButton;
     private TextView monthTitleTextView;
-    private com.roomorama.caldroid.CaldroidGridView weekdayGridView;
+    private GridView weekdayGridView;
     private InfiniteViewPager dateViewPager;
     private DatePageChangeListener pageChangeListener;
     private ArrayList<DateGridFragment> fragments;
@@ -287,7 +289,7 @@ public class CaldroidFragment extends DialogFragment {
      *
      * @return
      */
-    public com.roomorama.caldroid.CaldroidGridView getWeekdayGridView() {
+    public GridView getWeekdayGridView() {
         return weekdayGridView;
     }
 
@@ -1380,15 +1382,17 @@ public class CaldroidFragment extends DialogFragment {
         setShowNavigationArrows(showNavigationArrows);
 
         // For the weekday gridview ("SUN, MON, TUE, WED, THU, FRI, SAT")
-        weekdayGridView = (com.roomorama.caldroid.CaldroidGridView) view.findViewById(R.id.weekday_gridview);
+        weekdayGridView = (GridView) view.findViewById(R.id.weekday_gridview);
         WeekdayArrayAdapter weekdaysAdapter = getNewWeekdayAdapter(themeResource);
         weekdayGridView.setAdapter(weekdaysAdapter);
 
         // Setup all the pages of date grid views. These pages are recycled
         setupDateGridPages(view);
+        //setListViewHeightBasedOnChildren(weekdayGridView);
 
         // Refresh view
         refreshView();
+
 
         return view;
     }
@@ -1714,4 +1718,5 @@ public class CaldroidFragment extends DialogFragment {
             throw new RuntimeException(e);
         }
     }
-}
+
+};

@@ -21,7 +21,7 @@ import com.caldroid.R;
  * @author thomasdao
  */
 public class DateGridFragment extends Fragment {
-    private GridView gridView;
+    private com.roomorama.caldroid.CaldroidGridView gridView;
     private CaldroidGridAdapter gridAdapter;
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
@@ -96,7 +96,7 @@ public class DateGridFragment extends Fragment {
         if (gridView == null) {
             LayoutInflater localInflater = CaldroidFragment.getThemeInflater(getActivity(),
                     inflater, themeResource);
-            gridView = (GridView) localInflater.inflate(gridViewRes, container, false);
+            gridView = (com.roomorama.caldroid.CaldroidGridView) localInflater.inflate(gridViewRes, container, false);
             setupGridView();
         } else {
             ViewGroup parent = (ViewGroup) gridView.getParent();
@@ -104,8 +104,6 @@ public class DateGridFragment extends Fragment {
                 parent.removeView(gridView);
             }
         }
-
         return gridView;
     }
-
-}
+};

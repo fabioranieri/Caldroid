@@ -24,7 +24,7 @@
             style="?styleCaldroidRightArrow" />
     </LinearLayout>
 
-    <com.roomorama.caldroid.CaldroidGridView
+    <GridView
         android:id="@+id/weekday_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
