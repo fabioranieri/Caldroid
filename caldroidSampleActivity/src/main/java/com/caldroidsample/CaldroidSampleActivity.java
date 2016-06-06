@@ -81,7 +81,7 @@ public class CaldroidSampleActivity extends AppCompatActivity {
             args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
             args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
             args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
-            args.putBoolean(CaldroidFragment.FILL_CELL_ON_ROW, false);
+            //args.putBoolean(CaldroidFragment.FILL_CELL_ON_ROW, false);
 
             // Uncomment this to customize startDayOfWeek
             // args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
