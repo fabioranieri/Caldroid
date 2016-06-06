@@ -104,6 +104,8 @@ public class DateGridFragment extends Fragment {
                 parent.removeView(gridView);
             }
         }
+
         return gridView;
     }
-};
+
+}

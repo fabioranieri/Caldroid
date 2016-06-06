@@ -32,34 +32,32 @@ public class CalendarHelper {
      * @return
      */
     public static ArrayList<DateTime> getFullWeeks(int month, int year,
-                                                   int startDayOfWeek, boolean sixWeeksInCalendar, boolean fillCellOnRow) {
+                                                   int startDayOfWeek, boolean sixWeeksInCalendar) {
         ArrayList<DateTime> datetimeList = new ArrayList<DateTime>();
 
         DateTime firstDateOfMonth = new DateTime(year, month, 1, 0, 0, 0, 0);
         DateTime lastDateOfMonth = firstDateOfMonth.plusDays(firstDateOfMonth
                 .getNumDaysInMonth() - 1);
 
-        if(fillCellOnRow) {
-            // Add dates of first week from previous month
-            int weekdayOfFirstDate = firstDateOfMonth.getWeekDay();
+        // Add dates of first week from previous month
+        int weekdayOfFirstDate = firstDateOfMonth.getWeekDay();
 
-            // If weekdayOfFirstDate smaller than startDayOfWeek
-            // For e.g: weekdayFirstDate is Monday, startDayOfWeek is Tuesday
-            // increase the weekday of FirstDate because it's in the future
-            if (weekdayOfFirstDate < startDayOfWeek) {
-                weekdayOfFirstDate += 7;
+        // If weekdayOfFirstDate smaller than startDayOfWeek
+        // For e.g: weekdayFirstDate is Monday, startDayOfWeek is Tuesday
+        // increase the weekday of FirstDate because it's in the future
+        if (weekdayOfFirstDate < startDayOfWeek) {
+            weekdayOfFirstDate += 7;
+        }
+
+        while (weekdayOfFirstDate > 0) {
+            DateTime dateTime = firstDateOfMonth.minusDays(weekdayOfFirstDate
+                    - startDayOfWeek);
+            if (!dateTime.lt(firstDateOfMonth)) {
+                break;
             }
 
-            while (weekdayOfFirstDate > 0) {
-                DateTime dateTime = firstDateOfMonth.minusDays(weekdayOfFirstDate
-                        - startDayOfWeek);
-                if (!dateTime.lt(firstDateOfMonth)) {
-                    break;
-                }
-
-                datetimeList.add(dateTime);
-                weekdayOfFirstDate--;
-            }
+            datetimeList.add(dateTime);
+            weekdayOfFirstDate--;
         }
 
         // Add dates of current month
@@ -67,28 +65,27 @@ public class CalendarHelper {
             datetimeList.add(firstDateOfMonth.plusDays(i));
         }
 
-        if(fillCellOnRow) {
-            // Add dates of last week from next month
-            int endDayOfWeek = startDayOfWeek - 1;
+        // Add dates of last week from next month
+        int endDayOfWeek = startDayOfWeek - 1;
 
-            if (endDayOfWeek == 0) {
-                endDayOfWeek = 7;
-            }
+        if (endDayOfWeek == 0) {
+            endDayOfWeek = 7;
+        }
 
-            if (lastDateOfMonth.getWeekDay() != endDayOfWeek) {
-                int i = 1;
-                while (true) {
-                    DateTime nextDay = lastDateOfMonth.plusDays(i);
-                    datetimeList.add(nextDay);
-                    i++;
-                    if (nextDay.getWeekDay() == endDayOfWeek) {
-                        break;
-                    }
+        if (lastDateOfMonth.getWeekDay() != endDayOfWeek) {
+            int i = 1;
+            while (true) {
+                DateTime nextDay = lastDateOfMonth.plusDays(i);
+                datetimeList.add(nextDay);
+                i++;
+                if (nextDay.getWeekDay() == endDayOfWeek) {
+                    break;
                 }
             }
         }
+
         // Add more weeks to fill remaining rows
-        if(fillCellOnRow && sixWeeksInCalendar) {
+        if (sixWeeksInCalendar) {
             int size = datetimeList.size();
             int row = size / 7;
             int numOfDays = (6 - row) * 7;
