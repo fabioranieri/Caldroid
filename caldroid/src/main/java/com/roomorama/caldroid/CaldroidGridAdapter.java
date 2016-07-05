@@ -184,7 +184,7 @@ public class CaldroidGridAdapter extends BaseAdapter {
         }
 
         enablesDates = (ArrayList<DateTime>) caldroidData
-                .get(CaldroidFragment.ENABELD_DATES);
+                .get(CaldroidFragment.ENABLED_DATES);
         if (enablesDates != null) {
             enablesDatesMap.clear();
             for (DateTime dateTime : enablesDates) {
